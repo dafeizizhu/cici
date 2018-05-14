@@ -3,6 +3,7 @@ const path = require('path')
 const logger = require('koa-logger')
 const session = require('koa-session')
 const fs = require('fs')
+const bodyParser = require('koa-bodyparser')
 
 const vueRender = require('./lib/vue-render')
 
@@ -21,11 +22,19 @@ require('koa-qs')(app)
 
 if (process.env.NODE_ENV === 'dev') app.use(logger())
 
+const signin = require('./lib/router/sign-in')
+const auth = require('./lib/middlewares/auth')
+const signout = require('./lib/router/sign-out')
+
 app.use(session(SESSION_CONFIG, app))
+app.use(signin)
+app.use(auth())
+app.use(signout)
+app.use(bodyParser())
 app.use(async ctx => {
   ctx.type = 'html'
   try {
-    ctx.body = await render({ url: ctx.url, title: 'Cici系统' })
+    ctx.body = await render({ url: ctx.url, title: 'Cici系统', session: ctx.session })
   } catch (error) {
     ctx.throw(error.code, error.message, error)
   }

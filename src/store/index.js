@@ -15,7 +15,7 @@ export function createStore () {
         user: {
           id: '',
           yyuid: '',
-          name: '',
+          username: '',
           description: ''
         }
       }
