@@ -1,9 +1,7 @@
 const Koa = require('koa')
 const path = require('path')
-const serve = require('koa-static')
 const logger = require('koa-logger')
 const session = require('koa-session')
-const mount = require('koa-mount')
 const fs = require('fs')
 
 const vueRender = require('./lib/vue-render')
@@ -21,7 +19,7 @@ var render = vueRender(app, fs.readFileSync(path.resolve(__dirname, './src/index
 
 require('koa-qs')(app)
 
-if (process.env.NODE_ENV == 'dev') app.use(logger())
+if (process.env.NODE_ENV === 'dev') app.use(logger())
 
 app.use(session(SESSION_CONFIG, app))
 app.use(async ctx => {

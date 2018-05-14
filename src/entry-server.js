@@ -7,7 +7,9 @@ export default context => {
     router.onReady(() => {
       const matchedComponents = router.getMatchedComponents()
       if (!matchedComponents.length) {
-        return reject({ code: 404 })
+        let error = new Error()
+        error.code = 404
+        return reject(error)
       }
       Promise.all(matchedComponents.map(Component => {
         if (Component.asyncData) {

@@ -14,12 +14,12 @@ const readFile = (fs, file) => {
 
 module.exports = (app, cb) => {
   let bundle, clientManifest
-  let resolve
+  let _resolve
 
-  const readyPromise = new Promise(r => { resolve = r })
-  const ready = (...args) => {
-    resolve()
-    cb(...args)
+  const readyPromise = new Promise(resolve => { _resolve = resolve })
+  const ready = (error, ...args) => {
+    _resolve()
+    cb(error, ...args)
   }
 
   clientConfig.entry = ['webpack-hot-middleware/client', clientConfig.entry]
@@ -44,7 +44,7 @@ module.exports = (app, cb) => {
 
     clientManifest = JSON.parse(readFile(koaDevMiddleware.fileSystem, 'vue-ssr-client-manifest.json'))
     if (bundle) {
-      ready(bundle, { clientManifest })
+      ready(null, bundle, { clientManifest })
     }
   })
 
@@ -63,7 +63,7 @@ module.exports = (app, cb) => {
 
     bundle = JSON.parse(readFile(mfs, 'vue-ssr-server-bundle.json'))
     if (clientManifest) {
-      ready(bundle, { clientManifest })
+      ready(null, bundle, { clientManifest })
     }
   })
 

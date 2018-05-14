@@ -10,7 +10,7 @@ const fetchItem = () => new Promise((resolve, reject) => {
 })
 
 // Just a demo, full usage see Vuex
-export function createStore() {
+export function createStore () {
   return new Vuex.Store({
     state: {
       item: {}
