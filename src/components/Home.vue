@@ -8,11 +8,11 @@
 <script>
 export default {
   asyncData({ store, route }) {
-    return store.dispatch('test')
+    return store.dispatch('home/test')
   },
   computed: {
     item() {
-      return this.$store.state.item
+      return this.$store.state.home.item
     }
   }
 }
