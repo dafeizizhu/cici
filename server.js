@@ -24,7 +24,11 @@ if (process.env.NODE_ENV === 'dev') app.use(logger())
 app.use(session(SESSION_CONFIG, app))
 app.use(async ctx => {
   ctx.type = 'html'
-  ctx.body = await render({ url: ctx.url, title: 'Vue SSR Skeleton' })
+  try {
+    ctx.body = await render({ url: ctx.url, title: 'Vue SSR Skeleton' })
+  } catch (error) {
+    ctx.throw(error.code, error.message, error)
+  }
 })
 
 app.listen(PORT)

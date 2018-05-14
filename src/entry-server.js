@@ -9,6 +9,7 @@ export default context => {
       if (!matchedComponents.length) {
         let error = new Error()
         error.code = 404
+        error.url = context.url
         return reject(error)
       }
       Promise.all(matchedComponents.map(Component => {
