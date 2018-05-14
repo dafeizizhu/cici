@@ -25,7 +25,7 @@ app.use(session(SESSION_CONFIG, app))
 app.use(async ctx => {
   ctx.type = 'html'
   try {
-    ctx.body = await render({ url: ctx.url, title: 'Vue SSR Skeleton' })
+    ctx.body = await render({ url: ctx.url, title: 'Cici系统' })
   } catch (error) {
     ctx.throw(error.code, error.message, error)
   }
