@@ -19,13 +19,12 @@
 export default {
   computed: {
     defaultActive (...args) {
-      switch (this.$store.state.route.path) {
-        case '/projects':
-          return '1'
-        case '/profile':
-          return '2'
-        default:
-          return '0'
+      if (this.$store.state.route.path.indexOf('/projects') === 0) {
+        return '1'
+      } else if (this.$store.state.route.path.indexOf('/profile') === 0) {
+        return '2'
+      } else {
+        return '0'
       }
     }
   }

@@ -5,3 +5,4 @@ coverage
 npm-debug.log
 dist
 *.swp
+db/cici.sqlite3
