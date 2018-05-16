@@ -5,6 +5,11 @@ const VueSSRServerPlugin = require('vue-server-renderer/server-plugin')
 
 module.exports = merge(baseConfig, {
   entry: './src/entry-server.js',
+  resolve: {
+    alias: {
+      'api': 'lib/api'
+    }
+  },
   target: 'node',
   devtool: 'source-map',
   output: {

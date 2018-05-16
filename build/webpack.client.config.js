@@ -5,6 +5,11 @@ const VueSSRClientPlugin = require('vue-server-renderer/client-plugin')
 
 module.exports = merge(baseConfig, {
   entry: './src/entry-client.js',
+  resolve: {
+    alias: {
+      'api': 'src/api'
+    }
+  },
   plugins: [
     new webpack.optimize.CommonsChunkPlugin({
       name: 'manifest',

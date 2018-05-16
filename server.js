@@ -31,6 +31,7 @@ if (process.env.NODE_ENV === 'dev') app.use(logger())
 const signin = require('./lib/router/sign-in')
 const auth = require('./lib/middlewares/auth')
 const signout = require('./lib/router/sign-out')
+const api = require('./lib/router/api')
 
 app.use(session(SESSION_CONFIG, app))
 
@@ -42,6 +43,7 @@ app.use(signin)
 app.use(auth())
 app.use(signout)
 app.use(bodyParser())
+app.use(api)
 app.use(async ctx => {
   ctx.type = 'html'
   try {

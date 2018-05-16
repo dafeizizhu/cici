@@ -1,5 +1,6 @@
 const path = require('path')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const webpack = require('webpack')
 
 const extractStyle = new ExtractTextPlugin({
   filename: 'css/[name]_[contenthash:8].css',
@@ -7,6 +8,12 @@ const extractStyle = new ExtractTextPlugin({
 })
 
 module.exports = {
+  resolve: {
+    alias: {
+      'lib': path.join(__dirname, '..', 'lib'),
+      'src': path.join(__dirname, '..', 'src')
+    }
+  },
   output: {
     path: path.resolve(__dirname, '../dist'),
     publicPath: '/dist/',
@@ -42,6 +49,11 @@ module.exports = {
     }]
   },
   plugins: [
-    extractStyle
+    extractStyle,
+    new webpack.DefinePlugin({
+      'process.env': {
+        SRC_HOME: JSON.stringify(path.join(__dirname, '..'))
+      }
+    })
   ]
 }

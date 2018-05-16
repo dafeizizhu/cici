@@ -1,46 +1,45 @@
 <template>
   <section>
-    <el-form ref='form' label-width='80px'>
+    <el-form ref='form' label-width='200px'>
       <el-form-item label='用户名'>
-        <el-input></el-input>
+        <el-input v-model='user.name' :readonly='true'></el-input>
       </el-form-item>
       <el-form-item label='YYUID'>
-        <el-input></el-input>
+        <el-input v-model='user.yyuid' :readonly='true'></el-input>
       </el-form-item>
       <el-form-item label='描述'>
         <el-input></el-input>
       </el-form-item>
-      <el-form-item :label='i === 1 ? "版本控制" : ""' v-for='i in 2' :key='"vcs_" + i'>
+      <el-form-item :label='"版本控制_" + (i + 1)' v-for='(vcs, i) in vcsList' :key='vcs.id'>
         <el-col :span='4'>
-          <el-input placeholder='描述'></el-input>
+          <el-input placeholder='描述' v-model='vcs.description'></el-input>
         </el-col>
         <el-col :span='4' :offset='1'>
-          <el-select value='svn'>
-            <el-option label='svn' value='svn'></el-option>
-            <el-option label='git' value='git'></el-option>
+          <el-select placeholder='请选择版本控制类型' v-model='vcs.type'>
+            <el-option label='svn' :value='1'></el-option>
+            <el-option label='git' :value='2'></el-option>
           </el-select>
         </el-col>
         <el-col :span='4' :offset='1'>
-          <el-input placeholder='用户名'></el-input>
+          <el-input placeholder='用户名' v-model='vcs.username'></el-input>
         </el-col>
         <el-col :span='4' :offset='1'>
-          <el-input placeholder='密码' type='password'></el-input>
+          <el-input placeholder='密码' type='password' v-model='vcs.password'></el-input>
         </el-col>
         <el-col :span='4' :offset='1'>
-          <el-button type='danger'>删除</el-button>
+          <el-button type='danger' @click='removeVCS(vcs.id)'>删除</el-button>
         </el-col>
       </el-form-item>
       <el-form-item>
-        <el-button type='primary'>新增版本控制信息</el-button>
+        <el-button type='primary' @click='addVCS'>新增版本控制信息</el-button>
       </el-form-item>
       <el-form-item :label='i === 1 ? "项目" : ""' v-for='i in 2' :key='"project_" + i'>
-        <el-col :span='15'>
+        <el-col :span='14'>
           <el-input value='???' :readonly='true'></el-input>
         </el-col>
         <el-col :span='4' :offset='1'>
-          <el-select value='1'>
-            <el-option label='1' value='1'></el-option>
-            <el-option label='2' value='2'></el-option>
+          <el-select placeholder='请选择版本控制信息' value=''>
+            <el-option v-for='vcs in vcsList' :label='vcs.description' :value='vcs.id' :key='vcs.id'></el-option>
           </el-select>
         </el-col>
         <el-col :span='3' :offset='1'>
@@ -48,7 +47,7 @@
         </el-col>
       </el-form-item>
       <el-form-item>
-        <el-button type='primary'>保存</el-button>
+        <el-button type='primary' @click='saveProfile'>保存</el-button>
         <el-button>取消</el-button>
       </el-form-item>
     </el-form>
@@ -61,8 +60,32 @@ const NS = 'profile'
 
 export default {
   asyncData({ store, session, route }) {
-    console.info(session)
-    return Promise.resolve('hello')
+    return store.dispatch(`${NS}/findProfile`, { id: session.user.id })
+  },
+  computed: {
+    user () {
+      return this.$store.state.session.user
+    },
+    id () {
+      return this.$store.state[NS].id
+    },
+    vcsList () {
+      return this.$store.state[NS].vcsList
+    },
+    projectList () {
+      return this.$store.state[NS].projectList
+    }
+  },
+  methods: {
+    addVCS () {
+      this.$store.commit(`${NS}/addVCS`)
+    },
+    removeVCS (vcsId) {
+      this.$store.commit(`${NS}/removeVCS`, { vcsId })
+    },
+    saveProfile () {
+      this.$store.dispatch(`${NS}/saveProfile`).then(() => console.info('done!'))
+    }
   }
 }
 </script>
