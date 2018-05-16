@@ -9,7 +9,7 @@
     "build": "rimraf dist && npm run build:client && npm run build:server",
     "build:client": "webpack --config build/webpack.client.config.js --progress --hide-modules",
     "build:server": "webpack --config build/webpack.server.config.js --progress --hide-modules",
-    "start": "pm2 start server.config.js"
+    "start": "NODE_ENV=prod npm run build && NODE_ENV=prod pm2 start server.config.js"
   },
   "keywords": [],
   "author": "",
@@ -27,6 +27,7 @@
     "koa-session": "^5.5.0",
     "koa-static": "^4.0.1",
     "pm2": "^2.10.3",
+    "request": "^2.86.0",
     "sqlite3": "^4.0.0",
     "vue": "^2.4.2",
     "vue-router": "^2.7.0",
