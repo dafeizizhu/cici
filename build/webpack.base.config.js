@@ -9,7 +9,7 @@ const extractStyle = new ExtractTextPlugin({
 module.exports = {
   output: {
     path: path.resolve(__dirname, '../dist'),
-    publicPath: '/dist',
+    publicPath: '/dist/',
     filename: '[name]_[chunkhash:8].js',
     chunkFilename: '[name]_[chunkhash:8].js'
   },

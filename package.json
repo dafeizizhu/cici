@@ -6,14 +6,16 @@
   "main": "server.js",
   "scripts": {
     "server": "node server",
-    "build": "rm -rf dist && npm run build:client && npm run build:server",
+    "build": "rimraf dist && npm run build:client && npm run build:server",
     "build:client": "webpack --config build/webpack.client.config.js --progress --hide-modules",
-    "build:server": "webpack --config build/webpack.server.config.js --progress --hide-modules"
+    "build:server": "webpack --config build/webpack.server.config.js --progress --hide-modules",
+    "start": "pm2 start server.config.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "babel-cli": "^6.26.0",
     "element-ui": "^2.3.8",
     "koa": "^2.3.0",
     "koa-compose": "^4.0.0",
@@ -23,6 +25,7 @@
     "koa-route": "^3.2.0",
     "koa-session": "^5.5.0",
     "koa-static": "^4.0.1",
+    "pm2": "^2.10.3",
     "sqlite3": "^4.0.0",
     "vue": "^2.4.2",
     "vue-router": "^2.7.0",
@@ -44,6 +47,7 @@
     "php-unserialize": "0.0.1",
     "postcss-loader": "^2.1.5",
     "request-promise": "^4.2.2",
+    "rimraf": "^2.6.2",
     "sass-loader": "^7.0.1",
     "style-loader": "^0.21.0",
     "url-loader": "^1.0.1",

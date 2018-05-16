@@ -1,14 +1,20 @@
+require('babel-register')({
+  only: '/node_modules/koa-*/*'
+})
+
 const Koa = require('koa')
 const path = require('path')
 const logger = require('koa-logger')
 const session = require('koa-session')
 const fs = require('fs')
 const bodyParser = require('koa-bodyparser')
+const mount = require('koa-mount')
+const serve = require('koa-static')
 
 const vueRender = require('./lib/vue-render')
 
 const SESSION_CONFIG = {
-  key: 'vue-ssr-skeleton'
+  key: 'cici.fed.huya.com'
 }
 const PORT = 12345
 
@@ -27,6 +33,11 @@ const auth = require('./lib/middlewares/auth')
 const signout = require('./lib/router/sign-out')
 
 app.use(session(SESSION_CONFIG, app))
+
+if (process.env.NODE_ENV !== 'dev') {
+  app.use(mount('/dist', serve(path.join(__dirname, 'dist'))))
+}
+
 app.use(signin)
 app.use(auth())
 app.use(signout)

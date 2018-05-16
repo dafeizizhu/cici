@@ -15,9 +15,6 @@ export function createRouter () {
     }, {
       path: '/profile',
       component: () => import(/* webpackChunkName: "profile" */ './components/Profile.vue')
-    }, {
-      path: '/profile/init',
-      component: () => import(/* webpackChunkName: "profile-init" */ './components/ProfileInit.vue')
-    } ]
+    }]
   })
 }
