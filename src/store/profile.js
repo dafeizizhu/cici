@@ -1,17 +1,23 @@
-import api from 'api'
+const Api = require('api')
 
 export default {
   namespaced: true,
   state: () => ({
     id: '',
-    vcsList: [{
+    userInfo: {
+      id: '',
+      yyuid: '',
+      name: '',
+      description: ''
+    },
+    vcsInfoList: [{
       id: '',
       description: '',
       type: '',
       username: '',
       password: ''
     }],
-    projectList: [{
+    projectInfoList: [{
       id: '',
       vcsId: '',
       name: '',
@@ -19,39 +25,20 @@ export default {
     }]
   }),
   actions: {
-    findProfile: ({ state, commit }, { id }) => {
-      let ret = { id }
-      return api.findVCSListByUserId(id).then(vcsList => {
-        ret = Object.assign({}, ret, { vcsList })
-        return api.findProjectListByUserId(id)
-      }).then(projectList => {
-        return commit('findProfile', Object.assign({}, ret, { projectList }))
-      })
+    findProfile: ({ state, commit }, { userId }) => {
+      return Api.getSharedInstance().findProfile(userId)
+        .then(profileInfo => commit('findProfile', profileInfo))
     },
     saveProfile: ({ state, commit }) => {
-      let profile = JSON.parse(JSON.stringify(state))
-      return api.findVCSListByUserId(profile.id).then(vcsList => {
-        return Promise.all(profile.vcsList.map(vcs => {
-          if (typeof vcs.id === 'string') {
-            return api.createVCS(vcs.type, vcs.description, vcs.username, vcs.password, profile.id)
-          } else {
-            let index = vcsList.map(vcs => vcs.id).indexOf(vcs.id)
-            if (index >= 0) {
-              vcsList.splice(index, 1)
-              return api.updateVCS(vcs.id, vcs.type, vcs.description, vcs.username, vcs.password, profile.id)
-            } else {
-              return Promise.resolve()
-            }
-          }
-        })).then(() => Promise.all(vcsList.map(vcs => api.removeVCS(vcs.id))))
-      })
+      return Promise.reject(new Error('not implemented'))
     }
   },
   mutations: {
-    findProfile: (state, { id, vcsList, projectList }) => {
+    findProfile: (state, { id, userInfo, vcsInfoList, projectInfoList }) => {
       state.id = id
-      state.vcsList = vcsList
-      state.projectList = projectList
+      state.userInfo = userInfo
+      state.vcsInfoList = vcsInfoList
+      state.projectInfoList = projectInfoList
     },
     addVCS: state => {
       state.vcsList = [...state.vcsList, {

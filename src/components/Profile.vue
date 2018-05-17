@@ -2,32 +2,32 @@
   <section>
     <el-form ref='form' label-width='200px'>
       <el-form-item label='用户名'>
-        <el-input v-model='user.name' :readonly='true'></el-input>
+        <el-input v-model='userInfo.name' :readonly='true'></el-input>
       </el-form-item>
       <el-form-item label='YYUID'>
-        <el-input v-model='user.yyuid' :readonly='true'></el-input>
+        <el-input v-model='userInfo.yyuid' :readonly='true'></el-input>
       </el-form-item>
       <el-form-item label='描述'>
         <el-input></el-input>
       </el-form-item>
-      <el-form-item :label='"版本控制_" + (i + 1)' v-for='(vcs, i) in vcsList' :key='vcs.id'>
+      <el-form-item :label='"版本控制_" + (i + 1)' v-for='(vcsInfo, i) in vcsInfoList' :key='vcsInfo.id'>
         <el-col :span='4'>
-          <el-input placeholder='描述' v-model='vcs.description'></el-input>
+          <el-input placeholder='描述' v-model='vcsInfo.description'></el-input>
         </el-col>
         <el-col :span='4' :offset='1'>
-          <el-select placeholder='请选择版本控制类型' v-model='vcs.type'>
+          <el-select placeholder='请选择版本控制类型' v-model='vcsInfo.type'>
             <el-option label='svn' :value='1'></el-option>
             <el-option label='git' :value='2'></el-option>
           </el-select>
         </el-col>
         <el-col :span='4' :offset='1'>
-          <el-input placeholder='用户名' v-model='vcs.username'></el-input>
+          <el-input placeholder='用户名' v-model='vcsInfo.username'></el-input>
         </el-col>
         <el-col :span='4' :offset='1'>
-          <el-input placeholder='密码' type='password' v-model='vcs.password'></el-input>
+          <el-input placeholder='密码' type='password' v-model='vcsInfo.password'></el-input>
         </el-col>
         <el-col :span='4' :offset='1'>
-          <el-button type='danger' @click='removeVCS(vcs.id)'>删除</el-button>
+          <el-button type='danger' @click='removeVCS(vcsInfo.id)'>删除</el-button>
         </el-col>
       </el-form-item>
       <el-form-item>
@@ -39,7 +39,7 @@
         </el-col>
         <el-col :span='4' :offset='1'>
           <el-select placeholder='请选择版本控制信息' value=''>
-            <el-option v-for='vcs in vcsList' :label='vcs.description' :value='vcs.id' :key='vcs.id'></el-option>
+            <el-option v-for='vcsInfo in vcsInfoList' :label='vcsInfo.description' :value='vcsInfo.id' :key='vcsInfo.id'></el-option>
           </el-select>
         </el-col>
         <el-col :span='3' :offset='1'>
@@ -56,26 +56,20 @@
 
 <script>
 
+import { mapState } from 'vuex'
+
 const NS = 'profile'
 
 export default {
   asyncData({ store, session, route }) {
-    return store.dispatch(`${NS}/findProfile`, { id: session.user.id })
+    return store.dispatch(`${NS}/findProfile`, { userId: session.user.id })
   },
-  computed: {
-    user () {
-      return this.$store.state.session.user
-    },
-    id () {
-      return this.$store.state[NS].id
-    },
-    vcsList () {
-      return this.$store.state[NS].vcsList
-    },
-    projectList () {
-      return this.$store.state[NS].projectList
-    }
-  },
+  computed: mapState(NS, {
+    id: state => state.id,
+    userInfo: state => state.userInfo,
+    vcsInfoList: state => state.vcsInfoList,
+    projectInfoList: state => state.projectInfoList
+  }),
   methods: {
     addVCS () {
       this.$store.commit(`${NS}/addVCS`)
