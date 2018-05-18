@@ -1,7 +1,7 @@
 <template>
   <section>
     <el-row>
-      <router-link to='/project'>
+      <router-link to='/branch'>
         <el-button icon='el-icon-plus'>新增</el-button>
       </router-link>
     </el-row>

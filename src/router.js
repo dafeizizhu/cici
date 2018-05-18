@@ -13,6 +13,15 @@ export function createRouter () {
       path: '/projects',
       component: () => import(/* webpackChunkName: "projects" */ './components/Projects.vue')
     }, {
+      path: '/project',
+      component: () => import(/* webpackChunkName: "project" */ './components/Project.vue')
+    }, {
+      path: '/branches',
+      component: () => import(/* webpackChunkName: "branch" */ './components/Branches.vue')
+    }, {
+      path: '/branch',
+      component: () => import(/* webpackChunkName: "branch" */ './components/Branch.vue')
+    }, {
       path: '/profile',
       component: () => import(/* webpackChunkName: "profile" */ './components/Profile.vue')
     }]

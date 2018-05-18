@@ -27,7 +27,7 @@ export default {
   actions: {
     findProfile: ({ state, commit }, { userId }) => {
       return Api.getSharedInstance().findProfile(userId)
-        .then(profileInfo => commit('findProfile', profileInfo))
+        .then(model => commit('findProfile', model))
     },
     saveProfile: ({ state, commit }) => {
       return Promise.reject(new Error('not implemented'))

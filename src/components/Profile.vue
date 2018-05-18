@@ -10,7 +10,10 @@
       <el-form-item label='描述'>
         <el-input></el-input>
       </el-form-item>
-      <el-form-item :label='"版本控制_" + (i + 1)' v-for='(vcsInfo, i) in vcsInfoList' :key='vcsInfo.id'>
+      <el-form-item label='版本控制登陆信息'>
+        <el-button type='primary' @click='addVCS'>新增版本控制信息</el-button>
+      </el-form-item>
+      <el-form-item v-for='(vcsInfo, i) in vcsInfoList' :key='vcsInfo.id'>
         <el-col :span='4'>
           <el-input placeholder='描述' v-model='vcsInfo.description'></el-input>
         </el-col>
@@ -30,20 +33,20 @@
           <el-button type='danger' @click='removeVCS(vcsInfo.id)'>删除</el-button>
         </el-col>
       </el-form-item>
-      <el-form-item>
-        <el-button type='primary' @click='addVCS'>新增版本控制信息</el-button>
+      <el-form-item label='项目'>
+        <el-button type='primary'>新增项目</el-button>
       </el-form-item>
-      <el-form-item :label='i === 1 ? "项目" : ""' v-for='i in 2' :key='"project_" + i'>
-        <el-col :span='14'>
-          <el-input value='???' :readonly='true'></el-input>
+      <el-form-item v-for='i in 2' :key='i'>
+        <el-col :span='4'>
+          <el-input :readonly='true' placeholder='名称'></el-input>
         </el-col>
         <el-col :span='4' :offset='1'>
-          <el-select placeholder='请选择版本控制信息' value=''>
-            <el-option v-for='vcsInfo in vcsInfoList' :label='vcsInfo.description' :value='vcsInfo.id' :key='vcsInfo.id'></el-option>
-          </el-select>
+          <el-input :readonly='true' placeholder='描述'></el-input>
         </el-col>
-        <el-col :span='3' :offset='1'>
-          <el-button type='info'>前往</el-button>
+        <el-col :span='10' :offset='1'>
+          <el-button>编辑</el-button>
+          <el-button type='danger'>退出</el-button>
+          <el-button type='danger'>删除</el-button>
         </el-col>
       </el-form-item>
       <el-form-item>
