@@ -35,9 +35,12 @@
 </template>
 
 <script>
+
+const NS = 'branch'
+
 export default {
   asyncData({ store, route }) {
-    return Promise.resolve('foo')
+    return store.dispatch(`${NS}/findBranch`, { id: route.query.id })
   }
 }
 </script>
