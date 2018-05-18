@@ -20,6 +20,9 @@ class ClientApi {
   saveProject (projectInfo) {
     return HttpFetch.httpPost('/api/saveProject', null, { projectInfo })
   }
+  findProjects (userId) {
+    return HttpFetch.httpGet('/api/findProjects', { userId })
+  }
 }
 
 class HttpFetch {

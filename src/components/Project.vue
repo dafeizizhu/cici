@@ -4,7 +4,7 @@
       <el-form-item label='项目名称' prop='name'>
         <el-input v-model='projectInfo.name'></el-input>
       </el-form-item>
-      <el-form-item label='项目描述'>
+      <el-form-item label='项目描述' prop='description'>
         <el-input v-model='projectInfo.description'></el-input>
       </el-form-item>
       <el-form-item label='创建人' v-if='projectInfo.id'>
@@ -48,7 +48,8 @@ export default {
   data () {
     return {
       rules: {
-        name: [{ required: true, message: '请输入项目名称', trigger: 'blur' }]
+        name: [{ required: true, message: '请输入项目名称', trigger: 'blur' }],
+        description: [{ required: true, message: '请输入项目描述', trigger: 'blur' }]
       }
     }
   },

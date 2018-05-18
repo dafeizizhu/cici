@@ -13,7 +13,7 @@
       <el-form-item label='版本控制登陆信息'>
         <el-button type='primary' @click='addVCS'>新增版本控制信息</el-button>
       </el-form-item>
-      <el-form-item v-for='(vcsInfo, i) in vcsInfoList' :key='vcsInfo.id'>
+      <el-form-item v-for='(vcsInfo, i) in vcsInfoList' :key='"vcs_" + vcsInfo.id'>
         <el-col :span='4'>
           <el-input placeholder='描述' v-model='vcsInfo.description'></el-input>
         </el-col>
@@ -36,17 +36,17 @@
       <el-form-item label='项目'>
         <el-button type='primary'>新增项目</el-button>
       </el-form-item>
-      <el-form-item v-for='i in 2' :key='i'>
+      <el-form-item v-for='projectInfo in projectInfoList' :key='"project_" + projectInfo.id'>
         <el-col :span='4'>
-          <el-input :readonly='true' placeholder='名称'></el-input>
+          <el-input :readonly='true' placeholder='名称' v-model='projectInfo.name'></el-input>
         </el-col>
         <el-col :span='4' :offset='1'>
-          <el-input :readonly='true' placeholder='描述'></el-input>
+          <el-input :readonly='true' placeholder='描述' v-model='projectInfo.description'></el-input>
         </el-col>
         <el-col :span='10' :offset='1'>
           <el-button>编辑</el-button>
-          <el-button type='danger'>退出</el-button>
-          <el-button type='danger'>删除</el-button>
+          <el-button type='danger' v-if='projectInfo.ownerInfo.id !== userInfo.id'>退出</el-button>
+          <el-button type='danger' v-if='projectInfo.ownerInfo.id === userInfo.id'>删除</el-button>
         </el-col>
       </el-form-item>
       <el-form-item>
