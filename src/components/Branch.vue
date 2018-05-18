@@ -39,8 +39,11 @@
 const NS = 'branch'
 
 export default {
-  asyncData({ store, route }) {
-    return store.dispatch(`${NS}/findBranch`, { id: route.query.id })
+  asyncData({ store, route, session }) {
+    return store.dispatch(`${NS}/findBranch`, {
+      branchId: route.query.id,
+      userId: session.user.id
+    })
   }
 }
 </script>
