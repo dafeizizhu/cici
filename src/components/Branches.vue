@@ -48,9 +48,10 @@ const NS = 'branches'
 
 export default {
   asyncData({ store, route, session }) {
-    store.dispatch(`${NS}/findBranches`, { userId: session.user.id }) 
+    return store.dispatch(`${NS}/findBranches`, { userId: session.user.id })
   },
   computed: mapState(NS, {
+    projectId: state => state.projectId,
     projectInfoList: state => state.projectInfoList,
     branchInfoList: state => state.branchInfoList
   })

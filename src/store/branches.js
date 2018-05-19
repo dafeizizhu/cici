@@ -3,6 +3,7 @@ const Api = require('api')
 export default {
   namespaced: true,
   state: () => ({
+    projectId: '',
     projectInfoList: [],
     branchInfoList: []
   }),
