@@ -12,16 +12,25 @@ class ClientApi {
     return sharedInstance
   }
   findProfile (userId) {
-    return HttpFetch.httpGet('/api/findProfile', { userId })
+    return HttpFetch.httpGet('/api/findProfile')
   }
-  findProject (projectId) {
+  findProject (projectId, userId) {
     return HttpFetch.httpGet('/api/findProject', { projectId })
   }
-  saveProject (projectInfo) {
+  saveProject (projectInfo, userId) {
     return HttpFetch.httpPost('/api/saveProject', null, { projectInfo })
   }
   findProjects (userId) {
-    return HttpFetch.httpGet('/api/findProjects', { userId })
+    return HttpFetch.httpGet('/api/findProjects')
+  }
+  findBranch (branchId, userId) {
+    return HttpFetch.httpGet('/api/findBranch', { branchId })
+  }
+  saveBranch (branchInfo, userId) {
+    return HttpFetch.httpPost('/api/saveBranch', null, { branchInfo })
+  }
+  findBranches (userId) {
+    return HttpFetch.httpGet('/api/findBranches')
   }
 }
 

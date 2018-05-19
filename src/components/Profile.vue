@@ -18,9 +18,13 @@
           <el-input placeholder='描述' v-model='vcsInfo.description'></el-input>
         </el-col>
         <el-col :span='4' :offset='1'>
-          <el-select placeholder='请选择版本控制类型' v-model='vcsInfo.type'>
-            <el-option label='svn' :value='1'></el-option>
-            <el-option label='git' :value='2'></el-option>
+          <el-select placeholder='请选择版本控制类型' v-model='vcsInfo.type.value'>
+            <el-option
+              v-for='vcsType in vcsTypes'
+              :label='vcsType.name'
+              :value='vcsType.value'
+              :key='"vcsType_" + vcsType.value'>
+            </el-option>
           </el-select>
         </el-col>
         <el-col :span='4' :offset='1'>
@@ -68,7 +72,7 @@ export default {
     return store.dispatch(`${NS}/findProfile`, { userId: session.user.id })
   },
   computed: mapState(NS, {
-    id: state => state.id,
+    vcsTypes: state => state.vcsTypes,
     userInfo: state => state.userInfo,
     vcsInfoList: state => state.vcsInfoList,
     projectInfoList: state => state.projectInfoList

@@ -3,7 +3,7 @@ const Api = require('api')
 export default {
   namespaced: true,
   state: () => ({
-    id: '',
+    vcsTypes: [],
     userInfo: {
       id: '',
       yyuid: '',
@@ -30,12 +30,13 @@ export default {
         .then(model => commit('findProfile', model))
     },
     saveProfile: ({ state, commit }) => {
+      console.info(JSON.parse(JSON.stringify(state.vcsInfoList)))
       return Promise.reject(new Error('not implemented'))
     }
   },
   mutations: {
-    findProfile: (state, { id, userInfo, vcsInfoList, projectInfoList }) => {
-      state.id = id
+    findProfile: (state, { vcsTypes, userInfo, vcsInfoList, projectInfoList }) => {
+      state.vcsTypes = vcsTypes
       state.userInfo = userInfo
       state.vcsInfoList = vcsInfoList
       state.projectInfoList = projectInfoList
