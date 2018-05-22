@@ -16,9 +16,14 @@ export default {
     }
   }),
   actions: {
-    findBranch: ({ store, commit }, { branchId, userId }) => {
+    findBranch: ({ store, commit }, { branchId, userId, projectId }) => {
       return Api.getSharedInstance().findBranch(branchId, userId)
-        .then(model => commit('findBranch', model))
+        .then(model => {
+          if (!model.branchInfo.id) {
+            model.branchInfo.projectInfo.id = Number(projectId) || ''
+          }
+          return commit('findBranch', model)
+        })
     },
     saveBranch: ({ store, commit }, { branchInfo, userId }) => {
       return Api.getSharedInstance().saveBranch(branchInfo, userId)

@@ -1,8 +1,8 @@
 <template>
   <section>
     <el-form ref='form' label-width='200px' :model='branchInfo' :rules='rules'>
-      <el-form-item label='项目' prop='projectId'>
-        <el-select v-model='branchInfo.projectId'>
+      <el-form-item label='项目' prop='projectInfo.id'>
+        <el-select v-model='branchInfo.projectInfo.id'>
           <el-option 
             v-for='projectInfo in projectInfoList' 
             :label='projectInfo.name' 
@@ -11,8 +11,8 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label='版本控制登陆信息' prop='vcsId'>
-        <el-select v-model='branchInfo.vcsId'>
+      <el-form-item label='版本控制登陆信息' prop='vcsInfo.id'>
+        <el-select v-model='branchInfo.vcsInfo.id'>
           <el-option
             v-for='vcsInfo in vcsInfoList'
             :label='vcsInfo.type.name + ":" + vcsInfo.description'
@@ -57,6 +57,7 @@ const NS = 'branch'
 export default {
   asyncData({ store, route, session }) {
     return store.dispatch(`${NS}/findBranch`, {
+      projectId: route.query.projectId,
       branchId: route.query.id,
       userId: session.user.id
     })
@@ -64,7 +65,8 @@ export default {
   data () {
     return {
       rules: {
-        projectId: [{ required: true, message: '请选择项目', trigger: 'blur' }],
+        'projectInfo.id': [{ required: true, message: '请选择项目', trigger: 'blur' }],
+        'vcsInfo.id': [{ required: true, message: '请选择版本控制登陆信息', trigger: 'blur' }],
         name: [{ required: true, message: '请输入名称', trigger: 'blur' }],
         description: [{ required: true, message: '请输入描述', trigger: 'blur' }],
         vcsType: [{ required: true, message: '请选择版本控制类型', trigger: 'blur' }],
@@ -76,7 +78,7 @@ export default {
     vcsTypes: state => state.vcsTypes,
     branchInfo: state => state.branchInfo,
     projectInfoList: state => state.projectInfoList,
-    vcsInfoList: state => state.vcsInfoList
+    vcsInfoList: state => state.vcsInfoList.filter(vcsInfo => vcsInfo.type.value === state.branchInfo.vcsType.value)
   }),
   methods: {
     saveBranch () {

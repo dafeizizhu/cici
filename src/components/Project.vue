@@ -11,7 +11,7 @@
         <el-input :readonly='true' v-model='projectInfo.ownerInfo.name'></el-input>
       </el-form-item>
       <el-form-item label='分支' v-if='projectInfo.id'>
-        <router-link to='/branch'>
+        <router-link :to='"/branch?projectId=" + projectInfo.id'>
           <el-button type='primary'>新建分支</el-button>
         </router-link>
       </el-form-item>
