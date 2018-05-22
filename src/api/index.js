@@ -32,6 +32,9 @@ class ClientApi {
   findBranches (userId) {
     return HttpFetch.httpGet('/api/findBranches')
   }
+  deleteProject (projectId, userId) {
+    return HttpFetch.httpPost('/api/deleteProject', null, { projectId })
+  }
 }
 
 class HttpFetch {

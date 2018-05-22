@@ -13,7 +13,7 @@
         <el-table-column fixed='right' label='操作' min-width='200'>
           <template slot-scope='scope'>
             <router-link :to='"/project?id=" + scope.row.id'><el-button size='small'>编辑</el-button></router-link>
-            <el-button type='danger' size='small'>删除</el-button>
+            <el-button type='danger' size='small' @click='deleteProject(scope.row.id, scope.row.name)'>删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -33,6 +33,25 @@ export default {
   },
   computed: mapState(NS, {
     projectInfoList: state => state.projectInfoList
-  })
+  }),
+  methods: {
+    deleteProject (id, name) {
+      return this.$confirm('确定删除该项目' + name  + '么？')
+        .then(_ => {
+          let loadingInstance = this.$loading()
+          return this.$store.dispatch(`${NS}/deleteProject`, {
+            userId: this.$store.state.session.user.id,
+            projectId: id
+          })
+          .then(ret => {
+            loadingInstance.close()
+          })
+          .catch(error => {
+            loadingInstance.close()
+            this.$alert('项目删除失败：' + error.message)
+          })
+        },  _ => {})
+    }
+  }
 }
 </script>
