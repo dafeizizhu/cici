@@ -15,7 +15,7 @@
           <el-button type='primary'>新建分支</el-button>
         </router-link>
       </el-form-item>
-      <el-form-item v-for='(branchInfo, i) in projectInfo.branchInfoList' :key='branchInfo.id'>
+      <el-form-item v-for='(branchInfo, i) in branchInfoList' :key='branchInfo.id'>
         <el-col :span='4'>
           <el-input placeholder='名称' :readonly='true' v-model='branchInfo.name'></el-input>
         </el-col>
@@ -23,7 +23,7 @@
           <el-input placeholder='描述' :readonly='true' v-model='branchInfo.description'></el-input>
         </el-col>
         <el-col :span='10' :offset='1'>
-          <el-button>编辑</el-button>
+          <router-link :to='"/branch?id=" + branchInfo.id'><el-button>编辑</el-button></router-link>
           <el-button type='danger'>删除</el-button>
         </el-col>
       </el-form-item>
@@ -54,7 +54,8 @@ export default {
     }
   },
   computed: mapState(NS, {
-    projectInfo: state => state.projectInfo
+    projectInfo: state => state.projectInfo,
+    branchInfoList: state => state.branchInfoList
   }),
   methods: {
     saveProject () {

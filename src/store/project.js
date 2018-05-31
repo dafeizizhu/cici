@@ -12,25 +12,25 @@ export default {
         yyuid: '',
         name: '',
         description: ''
-      },
-      branchInfoList: [{
-        id: '',
-        projectId: '',
-        vcsId: '',
-        name: '',
-        description: '',
-        vcsType: '',
-        vcsUri: ''
-      }]
-    }
+      }
+    },
+    branchInfoList: [{
+      id: '',
+      projectId: '',
+      vcsId: '',
+      name: '',
+      description: '',
+      vcsType: '',
+      vcsUri: ''
+    }]
   }),
   actions: {
     findProject: ({ state, commit }, { projectId, session }) => {
-      return Api.getSharedInstance().findProject(projectId).then(({ projectInfo }) => {
+      return Api.getSharedInstance().findProject(projectId).then(({ projectInfo, branchInfoList }) => {
         if (!projectInfo.id) {
           projectInfo = Object.assign({}, projectInfo, { ownerInfo: session.user })
         }
-        commit('findProject', { projectInfo })
+        commit('findProject', { projectInfo, branchInfoList })
       })
     },
     saveProject: ({ state, commit }, { projectInfo }) => {
@@ -38,8 +38,9 @@ export default {
     }
   },
   mutations: {
-    findProject: (state, { projectInfo }) => {
+    findProject: (state, { projectInfo, branchInfoList }) => {
       state.projectInfo = projectInfo
+      state.branchInfoList = branchInfoList
     }
   }
 }
