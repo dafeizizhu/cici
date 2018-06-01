@@ -35,6 +35,12 @@ class ClientApi {
   deleteProject (projectId, userId) {
     return HttpFetch.httpPost('/api/deleteProject', null, { projectId })
   }
+  findAdmin (userId) {
+    return HttpFetch.httpGet('/api/findAdmin', { userId })
+  }
+  saveAdminProject (userId, projectIdList) {
+    return HttpFetch.httpPost('/api/saveAdminProject', null, { userId, projectIdList })
+  }
 }
 
 class HttpFetch {
