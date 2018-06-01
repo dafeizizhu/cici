@@ -35,8 +35,8 @@ class ClientApi {
   deleteProject (projectId, session) {
     return HttpFetch.httpPost('/api/deleteProject', null, { projectId })
   }
-  findAdmin (userId, session) {
-    return HttpFetch.httpGet('/api/findAdmin', { userId })
+  findAdminProject (userId, session) {
+    return HttpFetch.httpGet('/api/findAdminProject', { userId })
   }
   saveAdminProject (userId, projectIdList, session) {
     return HttpFetch.httpPost('/api/saveAdminProject', null, { userId, projectIdList })

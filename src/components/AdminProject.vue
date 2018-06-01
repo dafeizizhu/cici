@@ -41,11 +41,11 @@
 
 import { mapState } from 'vuex'
 
-const NS = 'admin'
+const NS = 'adminProject'
 
 export default {
   asyncData({ store, route, session }) {
-    return store.dispatch(`${NS}/findAdmin`, { session })
+    return store.dispatch(`${NS}/findAdminProject`, { session })
   },
   computed: mapState(NS, {
     session: state => state.session,

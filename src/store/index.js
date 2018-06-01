@@ -7,7 +7,7 @@ import branch from './branch'
 import project from './project'
 import projects from './projects'
 import branches from './branches'
-import admin from './admin'
+import adminProject from './adminProject'
 
 Vue.use(Vuex)
 
@@ -20,7 +20,7 @@ export function createStore () {
       project,
       projects,
       branches,
-      admin
+      adminProject
     },
     state: {
       session: {
