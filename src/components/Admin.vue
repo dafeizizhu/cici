@@ -48,6 +48,7 @@ export default {
     return store.dispatch(`${NS}/findAdmin`, { session })
   },
   computed: mapState(NS, {
+    session: state => state.session,
     userId: state => state.userId,
     userInfoList: state => state.userInfoList,
     ownedProjectInfoList: state => state.ownedProjectInfoList,
@@ -61,16 +62,20 @@ export default {
       let projectIdList = this.projectTransfer.model
         .filter(id => ownedProjectIdList.indexOf(id) < 0)
       let userId = this.userId
+      let session = this.session
 
       let loadingInstance = this.$loading()
-      this.$store.dispatch(`${NS}/saveAdminProject`, { userId, projectIdList })
+      this.$store.dispatch(`${NS}/saveAdminProject`, { userId, projectIdList, session })
         .then(ret => {
           loadingInstance.close()
           this.$alert('项目权限保存成功')
         })
     },
     changeAdminProjectUser (newUserId) {
-      return this.$store.dispatch(`${NS}/changeAdminProjectUser`, { userId: newUserId })
+      return this.$store.dispatch(`${NS}/changeAdminProjectUser`, { 
+        userId: newUserId,
+        session: this.session
+      })
     }
   }
 }

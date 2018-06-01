@@ -16,21 +16,22 @@ export default {
     }
   }),
   actions: {
-    findBranch: ({ store, commit }, { branchId, userId, projectId }) => {
-      return Api.getSharedInstance().findBranch(branchId, userId)
+    findBranch: ({ store, commit }, { session, branchId, projectId }) => {
+      return Api.getSharedInstance().findBranch(branchId, session)
         .then(model => {
           if (!model.branchInfo.id) {
             model.branchInfo.projectInfo.id = Number(projectId) || ''
           }
-          return commit('findBranch', model)
+          return commit('findBranch', Object.assign(model, { session }))
         })
     },
-    saveBranch: ({ store, commit }, { branchInfo, userId }) => {
-      return Api.getSharedInstance().saveBranch(branchInfo, userId)
+    saveBranch: ({ store, commit }, { branchInfo, session }) => {
+      return Api.getSharedInstance().saveBranch(branchInfo, session)
     }
   },
   mutations: {
-    findBranch: (state, { vcsTypes, projectInfoList, vcsInfoList, branchInfo }) => {
+    findBranch: (state, { session, vcsTypes, projectInfoList, vcsInfoList, branchInfo }) => {
+      state.session = session
       state.vcsTypes = vcsTypes
       state.projectInfoList = projectInfoList
       state.vcsInfoList = vcsInfoList

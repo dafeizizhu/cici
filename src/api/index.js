@@ -11,34 +11,34 @@ class ClientApi {
     }
     return sharedInstance
   }
-  findProfile (userId) {
+  findProfile (session) {
     return HttpFetch.httpGet('/api/findProfile')
   }
-  findProject (projectId, userId) {
+  findProject (projectId, session) {
     return HttpFetch.httpGet('/api/findProject', { projectId })
   }
-  saveProject (projectInfo, userId) {
+  saveProject (projectInfo, session) {
     return HttpFetch.httpPost('/api/saveProject', null, { projectInfo })
   }
-  findProjects (userId) {
+  findProjects (session) {
     return HttpFetch.httpGet('/api/findProjects')
   }
-  findBranch (branchId, userId) {
+  findBranch (branchId, session) {
     return HttpFetch.httpGet('/api/findBranch', { branchId })
   }
-  saveBranch (branchInfo, userId) {
+  saveBranch (branchInfo, session) {
     return HttpFetch.httpPost('/api/saveBranch', null, { branchInfo })
   }
-  findBranches (userId) {
+  findBranches (session) {
     return HttpFetch.httpGet('/api/findBranches')
   }
-  deleteProject (projectId, userId) {
+  deleteProject (projectId, session) {
     return HttpFetch.httpPost('/api/deleteProject', null, { projectId })
   }
-  findAdmin (userId) {
+  findAdmin (userId, session) {
     return HttpFetch.httpGet('/api/findAdmin', { userId })
   }
-  saveAdminProject (userId, projectIdList) {
+  saveAdminProject (userId, projectIdList, session) {
     return HttpFetch.httpPost('/api/saveAdminProject', null, { userId, projectIdList })
   }
 }

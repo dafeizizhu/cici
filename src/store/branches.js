@@ -8,13 +8,14 @@ export default {
     branchInfoList: []
   }),
   actions: {
-    findBranches: ({ state, commit }, { userId }) => {
-      return Api.getSharedInstance().findBranches(userId)
-        .then(model => commit('findBranches', model))
+    findBranches: ({ state, commit }, { session }) => {
+      return Api.getSharedInstance().findBranches(session)
+        .then(model => commit('findBranches', Object.assign(model, { session })))
     }
   },
   mutations: {
-    findBranches: (state, { projectInfoList, branchInfoList }) => {
+    findBranches: (state, { session, projectInfoList, branchInfoList }) => {
+      state.session = session
       state.projectInfoList = projectInfoList
       state.branchInfoList = branchInfoList
     }

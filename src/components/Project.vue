@@ -54,6 +54,7 @@ export default {
     }
   },
   computed: mapState(NS, {
+    session: state => state.session,
     projectInfo: state => state.projectInfo,
     branchInfoList: state => state.branchInfoList
   }),
@@ -63,6 +64,7 @@ export default {
         if (valid) {
           let loadingInstance = this.$loading()
           this.$store.dispatch(`${NS}/saveProject`, {
+            session: this.session,
             projectInfo: JSON.parse(JSON.stringify(this.projectInfo))
           }).then(ret => {
             loadingInstance.close()

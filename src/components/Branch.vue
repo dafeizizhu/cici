@@ -57,9 +57,9 @@ const NS = 'branch'
 export default {
   asyncData({ store, route, session }) {
     return store.dispatch(`${NS}/findBranch`, {
+      session,
       projectId: route.query.projectId,
-      branchId: route.query.id,
-      userId: session.user.id
+      branchId: route.query.id
     })
   },
   data () {
@@ -75,6 +75,7 @@ export default {
     }
   },
   computed: mapState(NS, {
+    session: state => state.session,
     vcsTypes: state => state.vcsTypes,
     branchInfo: state => state.branchInfo,
     projectInfoList: state => state.projectInfoList,
@@ -86,7 +87,7 @@ export default {
         if (valid) {
           let loadingInstance = this.$loading()
           this.$store.dispatch(`${NS}/saveBranch`, {
-            userId: this.$store.state.session.user.id,
+            session: this.session,
             branchInfo: JSON.parse(JSON.stringify(this.branchInfo))
           }).then(ret => {
             loadingInstance.close()

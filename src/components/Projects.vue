@@ -29,9 +29,10 @@ const NS = 'projects'
 
 export default {
   asyncData({ store, route, session }) {
-    return store.dispatch(`${NS}/findProjects`, { userId: session.user.id })
+    return store.dispatch(`${NS}/findProjects`, { session })
   },
   computed: mapState(NS, {
+    session: state => state.session,
     projectInfoList: state => state.projectInfoList
   }),
   methods: {
@@ -40,7 +41,7 @@ export default {
         .then(_ => {
           let loadingInstance = this.$loading()
           return this.$store.dispatch(`${NS}/deleteProject`, {
-            userId: this.$store.state.session.user.id,
+            session: this.session,
             projectId: id
           })
           .then(ret => {

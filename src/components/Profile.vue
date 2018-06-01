@@ -69,9 +69,10 @@ const NS = 'profile'
 
 export default {
   asyncData({ store, session, route }) {
-    return store.dispatch(`${NS}/findProfile`, { userId: session.user.id })
+    return store.dispatch(`${NS}/findProfile`, { session })
   },
   computed: mapState(NS, {
+    session: state => state.session,
     vcsTypes: state => state.vcsTypes,
     userInfo: state => state.userInfo,
     vcsInfoList: state => state.vcsInfoList,

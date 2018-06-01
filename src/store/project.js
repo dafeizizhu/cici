@@ -26,19 +26,20 @@ export default {
   }),
   actions: {
     findProject: ({ state, commit }, { projectId, session }) => {
-      return Api.getSharedInstance().findProject(projectId).then(({ projectInfo, branchInfoList }) => {
+      return Api.getSharedInstance().findProject(projectId, session).then(({ projectInfo, branchInfoList }) => {
         if (!projectInfo.id) {
           projectInfo = Object.assign({}, projectInfo, { ownerInfo: session.user })
         }
-        commit('findProject', { projectInfo, branchInfoList })
+        commit('findProject', { session, projectInfo, branchInfoList })
       })
     },
-    saveProject: ({ state, commit }, { projectInfo }) => {
-      return Api.getSharedInstance().saveProject(projectInfo)
+    saveProject: ({ state, commit }, { projectInfo, session }) => {
+      return Api.getSharedInstance().saveProject(projectInfo, session)
     }
   },
   mutations: {
-    findProject: (state, { projectInfo, branchInfoList }) => {
+    findProject: (state, { session, projectInfo, branchInfoList }) => {
+      state.session = session
       state.projectInfo = projectInfo
       state.branchInfoList = branchInfoList
     }

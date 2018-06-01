@@ -10,20 +10,21 @@ export default {
     }
   }),
   actions: {
-    findAdmin: ({ state, commit }, { session }) => {
-      return Api.getSharedInstance().findAdmin(session.user.id)
+    findAdmin: ({ store, commit }, { session }) => {
+      return Api.getSharedInstance().findAdmin(session.user.id, session)
         .then(({ userInfoList, projectInfoList, userProjectInfoList }) => commit('findAdmin', { userInfoList, projectInfoList, userProjectInfoList, session }))
     },
-    saveAdminProject: ({ state, commit }, { userId, projectIdList }) => {
-      return Api.getSharedInstance().saveAdminProject(userId, projectIdList)
+    saveAdminProject: ({ store, commit }, { userId, projectIdList, session }) => {
+      return Api.getSharedInstance().saveAdminProject(userId, projectIdList, session)
     },
-    changeAdminProjectUser: ({ state, commit }, { userId }) => {
-      return Api.getSharedInstance().findAdmin(userId)
+    changeAdminProjectUser: ({ store, commit }, { userId, session }) => {
+      return Api.getSharedInstance().findAdmin(userId, session)
         .then(({ userInfoList, projectInfoList, userProjectInfoList }) => commit('changeAdminProjectUser', { userInfoList, projectInfoList, userProjectInfoList, userId }))
     }
   },
   mutations: {
     findAdmin: (state, { userInfoList, projectInfoList, userProjectInfoList, session }) => {
+      state.session = session
       state.userId = session.user.id
       state.userInfoList = userInfoList
       state.projectInfoList = projectInfoList

@@ -25,9 +25,9 @@ export default {
     }]
   }),
   actions: {
-    findProfile: ({ state, commit }, { userId }) => {
-      return Api.getSharedInstance().findProfile(userId)
-        .then(model => commit('findProfile', model))
+    findProfile: ({ state, commit }, { session }) => {
+      return Api.getSharedInstance().findProfile(session)
+        .then(model => commit('findProfile', Object.assign(model, { session })))
     },
     saveProfile: ({ state, commit }) => {
       console.info(JSON.parse(JSON.stringify(state.vcsInfoList)))
@@ -35,7 +35,8 @@ export default {
     }
   },
   mutations: {
-    findProfile: (state, { vcsTypes, userInfo, vcsInfoList, projectInfoList }) => {
+    findProfile: (state, { session, vcsTypes, userInfo, vcsInfoList, projectInfoList }) => {
+      state.session = session
       state.vcsTypes = vcsTypes
       state.userInfo = userInfo
       state.vcsInfoList = vcsInfoList

@@ -16,12 +16,12 @@ export default {
     }]
   }),
   actions: {
-    findProjects: ({ state, commit }, { userId }) => {
-      return Api.getSharedInstance().findProjects(userId)
-        .then(({ projectInfoList }) => commit('findProjects', { projectInfoList }))
+    findProjects: ({ state, commit }, { session }) => {
+      return Api.getSharedInstance().findProjects(session)
+        .then(({ projectInfoList }) => commit('findProjects', { session, projectInfoList }))
     },
-    deleteProject: ({ state, commit }, { userId, projectId }) => {
-      return Api.getSharedInstance().deleteProject(projectId, userId)
+    deleteProject: ({ state, commit }, { session, projectId }) => {
+      return Api.getSharedInstance().deleteProject(projectId, session)
         .then(ret => {
           console.info('预删除', ret)
           commit('deleteProject', { projectId })
@@ -29,7 +29,8 @@ export default {
     }
   },
   mutations: {
-    findProjects: (state, { projectInfoList }) => {
+    findProjects: (state, { session, projectInfoList }) => {
+      state.session = session
       state.projectInfoList = projectInfoList
     },
     deleteProject: (state, { projectId }) => {
