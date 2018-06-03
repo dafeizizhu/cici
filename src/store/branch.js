@@ -3,9 +3,7 @@ const Api = require('api')
 export default {
   namespaced: true,
   state: () => ({
-    vcsTypes: [],
     projectInfoList: [],
-    vcsInfoList: [],
     branchInfo: {
       id: '',
       projectId: '',
@@ -21,6 +19,7 @@ export default {
         .then(model => {
           if (!model.branchInfo.id) {
             model.branchInfo.projectInfo.id = Number(projectId) || ''
+            model.branchInfo.ownerInfo = session.user
           }
           return commit('findBranch', Object.assign(model, { session }))
         })
@@ -30,11 +29,10 @@ export default {
     }
   },
   mutations: {
-    findBranch: (state, { session, vcsTypes, projectInfoList, vcsInfoList, branchInfo }) => {
+    findBranch: (state, { session, vcsTypes, projectInfoList, branchInfo }) => {
       state.session = session
       state.vcsTypes = vcsTypes
       state.projectInfoList = projectInfoList
-      state.vcsInfoList = vcsInfoList
       state.branchInfo = branchInfo
     }
   }

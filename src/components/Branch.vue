@@ -11,16 +11,6 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label='版本控制登陆信息' prop='vcsInfo.id'>
-        <el-select v-model='branchInfo.vcsInfo.id'>
-          <el-option
-            v-for='vcsInfo in vcsInfoList'
-            :label='vcsInfo.type.name + ":" + vcsInfo.description'
-            :value='vcsInfo.id'
-            :key='"vcs_" + vcsInfo.id'>
-          </el-option>
-        </el-select>
-      </el-form-item>
       <el-form-item label='名称' prop='name'>
         <el-input v-model='branchInfo.name'></el-input>
       </el-form-item>
@@ -66,7 +56,6 @@ export default {
     return {
       rules: {
         'projectInfo.id': [{ required: true, message: '请选择项目', trigger: 'blur' }],
-        'vcsInfo.id': [{ required: true, message: '请选择版本控制登陆信息', trigger: 'blur' }],
         name: [{ required: true, message: '请输入名称', trigger: 'blur' }],
         description: [{ required: true, message: '请输入描述', trigger: 'blur' }],
         vcsType: [{ required: true, message: '请选择版本控制类型', trigger: 'blur' }],
@@ -78,8 +67,7 @@ export default {
     session: state => state.session,
     vcsTypes: state => state.vcsTypes,
     branchInfo: state => state.branchInfo,
-    projectInfoList: state => state.projectInfoList,
-    vcsInfoList: state => state.vcsInfoList.filter(vcsInfo => vcsInfo.type.value === state.branchInfo.vcsType.value)
+    projectInfoList: state => state.projectInfoList
   }),
   methods: {
     saveBranch () {

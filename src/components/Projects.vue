@@ -12,7 +12,9 @@
         <el-table-column prop='ownerInfo.name' label='所有者' min-width='200'></el-table-column>
         <el-table-column fixed='right' label='操作' min-width='200'>
           <template slot-scope='scope'>
-            <router-link :to='"/project?id=" + scope.row.id'><el-button size='small'>编辑</el-button></router-link>
+            <router-link :to='"/project?id=" + scope.row.id' v-if='scope.row.ownerInfo.id === session.user.id'>
+              <el-button size='small'>编辑</el-button>
+            </router-link>
             <el-button
               type='danger'
               size='small'

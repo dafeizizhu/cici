@@ -29,8 +29,11 @@
         <el-table-column prop='projectInfo.name' label='项目' min-width='200'></el-table-column>
         <el-table-column fixed='right' label='操作' min-width='200'>
           <template slot-scope='scope'>
-            <router-link :to='"/branch?id=" + scope.row.id'>
+            <router-link :to='"/branch?id=" + scope.row.id' v-if='scope.row.ownerInfo.id === session.user.id'>
               <el-button size='small'>编辑</el-button>
+            </router-link>
+            <router-link :to='"/profileBranch?branch_id=" + scope.row.id'>
+              <el-button size='small'>配置</el-button>
             </router-link>
             <el-button type='danger' size='small'>删除</el-button>
           </template>
