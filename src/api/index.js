@@ -41,6 +41,15 @@ class ClientApi {
   saveAdminProject (userId, projectIdList, session) {
     return HttpFetch.httpPost('/api/saveAdminProject', null, { userId, projectIdList })
   }
+  findProfileVCS (vcsId, session) {
+    return HttpFetch.httpGet('/api/findProfileVCS', { vcsId })
+  }
+  saveProfileVCS (vcsInfo, session) {
+    return HttpFetch.httpPost('/api/saveProfileVCS', null, { vcsInfo })
+  }
+  deleteProfileVCS (vcsId, session) {
+    return HttpFetch.httpPost('/api/deleteProfileVCS', null, { vcsId })
+  }
 }
 
 class HttpFetch {

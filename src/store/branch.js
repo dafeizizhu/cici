@@ -16,7 +16,7 @@ export default {
     }
   }),
   actions: {
-    findBranch: ({ store, commit }, { session, branchId, projectId }) => {
+    findBranch: ({ state, commit }, { session, branchId, projectId }) => {
       return Api.getSharedInstance().findBranch(branchId, session)
         .then(model => {
           if (!model.branchInfo.id) {
@@ -25,7 +25,7 @@ export default {
           return commit('findBranch', Object.assign(model, { session }))
         })
     },
-    saveBranch: ({ store, commit }, { branchInfo, session }) => {
+    saveBranch: ({ state, commit }, { branchInfo, session }) => {
       return Api.getSharedInstance().saveBranch(branchInfo, session)
     }
   },

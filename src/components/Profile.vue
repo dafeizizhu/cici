@@ -11,51 +11,24 @@
         <el-input></el-input>
       </el-form-item>
       <el-form-item label='版本控制登陆信息'>
-        <el-button type='primary' @click='addVCS'>新增版本控制信息</el-button>
-      </el-form-item>
-      <el-form-item v-for='(vcsInfo, i) in vcsInfoList' :key='"vcs_" + vcsInfo.id'>
-        <el-col :span='4'>
-          <el-input placeholder='描述' v-model='vcsInfo.description'></el-input>
-        </el-col>
-        <el-col :span='4' :offset='1'>
-          <el-select placeholder='请选择版本控制类型' v-model='vcsInfo.type.value'>
-            <el-option
-              v-for='vcsType in vcsTypes'
-              :label='vcsType.name'
-              :value='vcsType.value'
-              :key='"vcsType_" + vcsType.value'>
-            </el-option>
-          </el-select>
-        </el-col>
-        <el-col :span='4' :offset='1'>
-          <el-input placeholder='用户名' v-model='vcsInfo.username'></el-input>
-        </el-col>
-        <el-col :span='4' :offset='1'>
-          <el-input placeholder='密码' type='password' v-model='vcsInfo.password'></el-input>
-        </el-col>
-        <el-col :span='4' :offset='1'>
-          <el-button type='danger' @click='removeVCS(vcsInfo.id)'>删除</el-button>
-        </el-col>
-      </el-form-item>
-      <el-form-item label='项目'>
-        <el-button type='primary'>新增项目</el-button>
-      </el-form-item>
-      <el-form-item v-for='projectInfo in projectInfoList' :key='"project_" + projectInfo.id'>
-        <el-col :span='4'>
-          <el-input :readonly='true' placeholder='名称' v-model='projectInfo.name'></el-input>
-        </el-col>
-        <el-col :span='4' :offset='1'>
-          <el-input :readonly='true' placeholder='描述' v-model='projectInfo.description'></el-input>
-        </el-col>
-        <el-col :span='10' :offset='1'>
-          <el-button>编辑</el-button>
-          <el-button type='danger' v-if='projectInfo.ownerInfo.id !== userInfo.id'>退出</el-button>
-          <el-button type='danger' v-if='projectInfo.ownerInfo.id === userInfo.id'>删除</el-button>
-        </el-col>
+        <router-link to='/profileVCS'><el-button type='primary'>新增版本控制信息</el-button></router-link>
+        <el-table :data='vcsInfoList' style='width: 100%'>
+          <el-table-column prop='type.name' label='类型' min-width='200'></el-table-column>
+          <el-table-column prop='description' label='描述' min-width='400'></el-table-column>
+          <el-table-column prop='username' label='用户名' min-width='200'></el-table-column>
+          <el-table-column fix='right' label='操作' min-width='200'>
+            <template slot-scope='scope'>
+              <router-link :to='"/profileVCS?id=" + scope.row.id'>
+                <el-button size='small'>编辑</el-button>
+              </router-link>
+              <el-button type='danger' size='small' @click='removeVCS(scope.row.id)'>删除</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
       </el-form-item>
       <el-form-item>
         <el-button type='primary' @click='saveProfile'>保存</el-button>
-        <el-button>取消</el-button>
+        <el-button @click='$router.go(-1)'>取消</el-button>
       </el-form-item>
     </el-form>
   </section>
@@ -79,11 +52,20 @@ export default {
     projectInfoList: state => state.projectInfoList
   }),
   methods: {
-    addVCS () {
-      this.$store.commit(`${NS}/addVCS`)
-    },
     removeVCS (vcsId) {
-      this.$store.commit(`${NS}/removeVCS`, { vcsId })
+      this.$confirm('确定删除？')
+        .then(_ => {
+          let loadingInstance = this.$loading()
+          return this.$store.dispatch(`${NS}/removeVCS`, {
+            session: this.session,
+            vcsId
+          }).then(_ => {
+            loadingInstance.close()
+          }).catch(error => {
+            loadingInstance.close()
+            this.$alert('删除失败：' + error.message)
+          })
+        }, _ => {})
     },
     saveProfile () {
       this.$store.dispatch(`${NS}/saveProfile`).then(() => console.info('done!'))

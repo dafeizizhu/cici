@@ -32,6 +32,10 @@ export default {
     saveProfile: ({ state, commit }) => {
       console.info(JSON.parse(JSON.stringify(state.vcsInfoList)))
       return Promise.reject(new Error('not implemented'))
+    },
+    removeVCS: ({ state, commit }, { session, vcsId }) => {
+      return Api.getSharedInstance().deleteProfileVCS(vcsId, session)
+        .then(_ => commit('removeVCS', { vcsId }))
     }
   },
   mutations: {
@@ -42,18 +46,9 @@ export default {
       state.vcsInfoList = vcsInfoList
       state.projectInfoList = projectInfoList
     },
-    addVCS: state => {
-      state.vcsList = [...state.vcsList, {
-        id: 'vcs_' + new Date().valueOf(),
-        description: '111',
-        type: '1',
-        username: '111',
-        password: '111'
-      }]
-    },
     removeVCS: (state, { vcsId }) => {
-      let index = state.vcsList.map(vcs => vcs.id).indexOf(vcsId)
-      state.vcsList = [...state.vcsList.slice(0, index), ...state.vcsList.slice(index + 1)]
+      let index = state.vcsInfoList.map(vcs => vcs.id).indexOf(vcsId)
+      state.vcsInfoList = [...state.vcsInfoList.slice(0, index), ...state.vcsInfoList.slice(index + 1)]
     }
   }
 }

@@ -10,14 +10,14 @@ export default {
     }
   }),
   actions: {
-    findAdminProject: ({ store, commit }, { session }) => {
+    findAdminProject: ({ state, commit }, { session }) => {
       return Api.getSharedInstance().findAdminProject(session.user.id, session)
         .then(({ userInfoList, projectInfoList, userProjectInfoList }) => commit('findAdminProject', { userInfoList, projectInfoList, userProjectInfoList, session }))
     },
-    saveAdminProject: ({ store, commit }, { userId, projectIdList, session }) => {
+    saveAdminProject: ({ state, commit }, { userId, projectIdList, session }) => {
       return Api.getSharedInstance().saveAdminProject(userId, projectIdList, session)
     },
-    changeAdminProjectUser: ({ store, commit }, { userId, session }) => {
+    changeAdminProjectUser: ({ state, commit }, { userId, session }) => {
       return Api.getSharedInstance().findAdminProject(userId, session)
         .then(({ userInfoList, projectInfoList, userProjectInfoList }) => commit('changeAdminProjectUser', { userInfoList, projectInfoList, userProjectInfoList, userId }))
     }

@@ -27,6 +27,9 @@ export function createRouter () {
     }, {
       path: '/adminProject',
       component: () => import(/* webpackChunkName: "admin" */ './components/AdminProject.vue')
+    }, {
+      path: '/profileVCS',
+      component: () => import(/* webpackChunkName: "profileVCS" */ './components/ProfileVCS.vue')
     }]
   })
 }
