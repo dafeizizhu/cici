@@ -39,6 +39,13 @@ if (process.env.NODE_ENV !== 'dev') {
   app.use(mount('/dist', serve(path.join(__dirname, 'dist'))))
 }
 
+app.use(async (ctx, next) => {
+  try {
+    await next()
+  } catch (error) {
+    ctx.throw(error.code || 500, error.message)
+  }
+})
 app.use(signin)
 app.use(auth())
 app.use(signout)
@@ -46,11 +53,7 @@ app.use(bodyParser())
 app.use(api)
 app.use(async ctx => {
   ctx.type = 'html'
-  try {
-    ctx.body = await render({ url: ctx.url, title: 'Cici系统', session: ctx.session })
-  } catch (error) {
-    ctx.throw(error.code, error.message, error)
-  }
+  ctx.body = await render({ url: ctx.url, title: 'Cici系统', session: ctx.session })
 })
 
 app.listen(PORT)

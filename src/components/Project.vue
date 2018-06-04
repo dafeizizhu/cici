@@ -69,9 +69,12 @@ export default {
           }).then(ret => {
             loadingInstance.close()
             this.$alert('项目保存成功').then(() => this.$router.push({ path: '/projects' }))
+          }).catch(error => {
+            loadingInstance.close()
+            this.$alert(`项目保存失败：${error.message}`)
           })
         }
-      })
+      }, _ => {})
     }
   }
 }

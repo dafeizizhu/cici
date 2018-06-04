@@ -9,6 +9,7 @@ import projects from './projects'
 import branches from './branches'
 import adminProject from './adminProject'
 import profileVCS from './profile-vcs'
+import profileBranch from './profile-branch'
 
 Vue.use(Vuex)
 
@@ -22,7 +23,8 @@ export function createStore () {
       projects,
       branches,
       adminProject,
-      profileVCS
+      profileVCS,
+      profileBranch
     },
     state: {
       session: {

@@ -32,7 +32,7 @@
             <router-link :to='"/branch?id=" + scope.row.id' v-if='scope.row.ownerInfo.id === session.user.id'>
               <el-button size='small'>编辑</el-button>
             </router-link>
-            <router-link :to='"/profileBranch?branch_id=" + scope.row.id'>
+            <router-link :to='"/profileBranch?branchId=" + scope.row.id'>
               <el-button size='small'>配置</el-button>
             </router-link>
             <el-button type='danger' size='small'>删除</el-button>

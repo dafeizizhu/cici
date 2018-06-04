@@ -50,6 +50,12 @@ class ClientApi {
   deleteProfileVCS (vcsId, session) {
     return HttpFetch.httpPost('/api/deleteProfileVCS', null, { vcsId })
   }
+  findProfileBranch (branchId, session) {
+    return HttpFetch.httpGet('/api/findProfileBranch', { branchId })
+  }
+  saveProfileBranch (userBranchInfo, session) {
+    return HttpFetch.httpPost('/api/saveProfileBranch', null, { userBranchInfo })
+  }
 }
 
 class HttpFetch {

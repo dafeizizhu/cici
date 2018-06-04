@@ -30,6 +30,9 @@ export function createRouter () {
     }, {
       path: '/profileVCS',
       component: () => import(/* webpackChunkName: "profileVCS" */ './components/ProfileVCS.vue')
+    }, {
+      path: '/profileBranch',
+      component: () => import(/* webpackChunkName: "profileBranch" */ './components/ProfileBranch.vue')
     }]
   })
 }
