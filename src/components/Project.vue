@@ -10,6 +10,9 @@
       <el-form-item label='创建人' v-if='projectInfo.id'>
         <el-input :readonly='true' v-model='projectInfo.ownerInfo.name'></el-input>
       </el-form-item>
+      <el-form-item label='部署域名' prop='domain'>
+        <el-input v-model='projectInfo.domain'></el-input>
+      </el-form-item>
       <el-form-item label='分支' v-if='projectInfo.id'>
         <router-link :to='"/branch?projectId=" + projectInfo.id'>
           <el-button type='primary'>新建分支</el-button>
@@ -49,7 +52,8 @@ export default {
     return {
       rules: {
         name: [{ required: true, message: '请输入项目名称', trigger: 'blur' }],
-        description: [{ required: true, message: '请输入项目描述', trigger: 'blur' }]
+        description: [{ required: true, message: '请输入项目描述', trigger: 'blur' }],
+        domain: [{ required: true, message: '请输入部署域名', trigger: 'blur' }]
       }
     }
   },
