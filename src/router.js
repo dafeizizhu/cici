@@ -33,6 +33,9 @@ export function createRouter () {
     }, {
       path: '/profileBranch',
       component: () => import(/* webpackChunkName: "profileBranch" */ './components/ProfileBranch.vue')
+    }, {
+      path: '/deploy',
+      component: () => import(/* webpackChunkName: "deploy" */ './components/Deploy.vue')
     }]
   })
 }

@@ -43,7 +43,7 @@ app.use(async (ctx, next) => {
   try {
     await next()
   } catch (error) {
-    ctx.throw(error.code || 500, error.message)
+    ctx.throw(error.code || 500, error.message, error)
   }
 })
 app.use(signin)

@@ -10,6 +10,7 @@ import branches from './branches'
 import adminProject from './adminProject'
 import profileVCS from './profile-vcs'
 import profileBranch from './profile-branch'
+import deploy from './deploy'
 
 Vue.use(Vuex)
 
@@ -24,7 +25,8 @@ export function createStore () {
       branches,
       adminProject,
       profileVCS,
-      profileBranch
+      profileBranch,
+      deploy
     },
     state: {
       session: {

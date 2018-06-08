@@ -56,6 +56,12 @@ class ClientApi {
   saveProfileBranch (userBranchInfo, session) {
     return HttpFetch.httpPost('/api/saveProfileBranch', null, { userBranchInfo })
   }
+  findDeploy (deployId, projectId, session) {
+    return HttpFetch.httpGet('/api/findDeploy', { deployId, projectId })
+  }
+  saveDeploy (deployInfo, session) {
+    return HttpFetch.httpPost('/api/saveDeploy', null, { deployInfo })
+  }
 }
 
 class HttpFetch {

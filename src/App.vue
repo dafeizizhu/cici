@@ -26,6 +26,8 @@ export default {
     defaultActive (...args) {
       if (this.$store.state.route.path.indexOf('/project') === 0) {
         return '1'
+      } else if (this.$store.state.route.path.indexOf('/deploy') === 0) {
+        return '1'
       } else if (this.$store.state.route.path.indexOf('/branch') === 0) {
         return '2'
       } else if (this.$store.state.route.path.indexOf('/profile') === 0) {

@@ -30,6 +30,11 @@
           <el-button type='danger'>删除</el-button>
         </el-col>
       </el-form-item>
+      <el-form-item label='部署' v-if='projectInfo.id'>
+        <router-link :to='"/deploy?projectId=" + projectInfo.id'>
+          <el-button type='primary'>新建部署</el-button>
+        </router-link>
+      </el-form-item>
       <el-form-item>
         <el-button type='primary' @click='saveProject'>保存</el-button>
         <el-button @click='$router.go(-1)'>取消</el-button>
