@@ -17,23 +17,36 @@
         <router-link :to='"/branch?projectId=" + projectInfo.id'>
           <el-button type='primary'>新建分支</el-button>
         </router-link>
-      </el-form-item>
-      <el-form-item v-for='(branchInfo, i) in branchInfoList' :key='branchInfo.id'>
-        <el-col :span='4'>
-          <el-input placeholder='名称' :readonly='true' v-model='branchInfo.name'></el-input>
-        </el-col>
-        <el-col :span='4' :offset='1'>
-          <el-input placeholder='描述' :readonly='true' v-model='branchInfo.description'></el-input>
-        </el-col>
-        <el-col :span='10' :offset='1'>
-          <router-link :to='"/branch?id=" + branchInfo.id'><el-button>编辑</el-button></router-link>
-          <el-button type='danger'>删除</el-button>
-        </el-col>
+        <el-table :data='branchInfoList' style='width: 100%'>
+          <el-table-column prop='name' label='名称' min-width='200'></el-table-column>
+          <el-table-column prop='description' label='描述' min-width='200'></el-table-column>
+          <el-table-column fix='right' label='操作' min-width='200'>
+            <template slot-scope='scope'>
+              <router-link :to='"/branch?id=" + scope.row.id'>
+                <el-button size='small'>编辑</el-button>
+              </router-link>
+              <el-button type='danger' size='small'>删除</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
       </el-form-item>
       <el-form-item label='部署' v-if='projectInfo.id'>
         <router-link :to='"/deploy?projectId=" + projectInfo.id'>
           <el-button type='primary'>新建部署</el-button>
         </router-link>
+        <el-table :data='deployInfoList' style='width: 100%'>
+          <el-table-column prop='name' label='名称' min-width='200'></el-table-column>
+          <el-table-column prop='description' label='描述' min-width='200'></el-table-column>
+          <el-table-column prop='dist' label='部署路径' min-width='200'></el-table-column>
+          <el-table-column fix='right' label='操作' min-width='200'>
+            <template slot-scope='scope'>
+              <router-link :to='"/deploy?id=" + scope.row.id'>
+                <el-button size='small'>编辑</el-button>
+              </router-link>
+              <el-button type='danger' size='small'>删除</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
       </el-form-item>
       <el-form-item>
         <el-button type='primary' @click='saveProject'>保存</el-button>
@@ -65,7 +78,8 @@ export default {
   computed: mapState(NS, {
     session: state => state.session,
     projectInfo: state => state.projectInfo,
-    branchInfoList: state => state.branchInfoList
+    branchInfoList: state => state.branchInfoList,
+    deployInfoList: state => state.deployInfoList
   }),
   methods: {
     saveProject () {
