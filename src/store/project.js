@@ -21,6 +21,10 @@ export default {
     },
     saveProject: ({ state, commit }, { projectInfo, session }) => {
       return Api.getSharedInstance().saveProject(projectInfo, session)
+    },
+    deleteDeploy: ({ state, commit }, { deployId, session }) => {
+      return Api.getSharedInstance().deleteDeploy(deployId, session)
+        .then(_ => commit('deleteDeploy', { deployId }))
     }
   },
   mutations: {
@@ -29,6 +33,16 @@ export default {
       state.projectInfo = projectInfo
       state.branchInfoList = branchInfoList
       state.deployInfoList = deployInfoList
+    },
+    deleteDeploy: (state, { deployId }) => {
+      let index = state.deployInfoList
+        .map(deployInfo => deployInfo.id)
+        .indexOf(deployId)
+
+      state.deployInfoList = [
+        ...state.deployInfoList.slice(0, index),
+        ...state.deployInfoList.slice(index + 1)
+      ]
     }
   }
 }

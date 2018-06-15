@@ -43,7 +43,7 @@
               <router-link :to='"/deploy?id=" + scope.row.id'>
                 <el-button size='small'>编辑</el-button>
               </router-link>
-              <el-button type='danger' size='small'>删除</el-button>
+              <el-button type='danger' size='small' @click='deleteDeploy(scope.row.id)'>删除</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -98,6 +98,23 @@ export default {
           })
         }
       }, _ => {})
+    },
+    deleteDeploy (id) {
+      return this.$confirm('确定删除该部署信息么？')
+        .then(_ => {
+          let loadingInstance = this.$loading()
+          return this.$store.dispatch(`${NS}/deleteDeploy`, {
+            session: this.session,
+            deployId: id
+          })
+          .then(ret => {
+            loadingInstance.close()
+          })
+          .catch(error => {
+            loadingInstance.close()
+            this.$alert('删除部署信息失败：' + error.message)
+          })
+        }, _ => {})
     }
   }
 }

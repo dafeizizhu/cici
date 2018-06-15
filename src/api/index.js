@@ -62,6 +62,9 @@ class ClientApi {
   saveDeploy (deployInfo, session) {
     return HttpFetch.httpPost('/api/saveDeploy', null, { deployInfo })
   }
+  deleteDeploy (deployId, session) {
+    return HttpFetch.httpPost('/api/deleteDeploy', null, { deployId })
+  }
 }
 
 class HttpFetch {
