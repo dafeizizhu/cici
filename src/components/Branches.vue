@@ -22,11 +22,16 @@
     </el-row>
     <el-row>
       <el-table :data='branchInfoList' style='width: 100%'>
-        <el-table-column prop='name' label='名称' min-width='200'></el-table-column>
-        <el-table-column prop='description' label='描述' min-width='400'></el-table-column>
-        <el-table-column prop='vcsType.name' label='版本控制登陆信息' min-width='200'></el-table-column>
-        <el-table-column prop='vcsUri' label='版本控制仓库' min-width='400'></el-table-column>
-        <el-table-column prop='projectInfo.name' label='项目' min-width='200'></el-table-column>
+        <el-table-column prop='name' label='名称' min-width='100'></el-table-column>
+        <el-table-column prop='description' label='描述' min-width='200'></el-table-column>
+        <el-table-column prop='vcsType.name' label='版本控制' min-width='100'></el-table-column>
+        <el-table-column prop='vcsUri' label='版本控制仓库' min-width='200'></el-table-column>
+        <el-table-column prop='projectInfo.name' label='项目' min-width='100'></el-table-column>
+        <el-table-column label='上次更新时间' min-width='100'>
+          <template slot-scope='scope'>
+            {{ scope.row.prevFetchTime | formatDate }}
+          </template>
+        </el-table-column>
         <el-table-column fixed='right' label='操作' min-width='200'>
           <template slot-scope='scope'>
             <router-link :to='"/branch?id=" + scope.row.id' v-if='scope.row.ownerInfo.id === session.user.id'>
@@ -45,6 +50,7 @@
 
 <script>
 
+import moment from 'moment'
 import { mapState } from 'vuex'
 
 const NS = 'branches'
@@ -58,6 +64,11 @@ export default {
     projectId: state => state.projectId,
     projectInfoList: state => state.projectInfoList,
     branchInfoList: state => state.branchInfoList
-  })
+  }),
+  filters: {
+    formatDate (time) {
+      return moment(time).format('YYYY/MM/DD HH:mm:SS')
+    }
+  }
 }
 </script>

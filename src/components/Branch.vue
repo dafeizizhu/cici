@@ -31,6 +31,7 @@
         <el-input v-model='branchInfo.vcsUri'></el-input>
       </el-form-item>
       <el-form-item>
+        <el-button @click='gotoCommits(branchInfo.id)'>查看提交信息</el-button>
         <el-button type='primary' @click='saveBranch'>保存</el-button>
         <el-button @click='$router.go(-1)'>取消</el-button>
       </el-form-item>
@@ -86,6 +87,9 @@ export default {
           })
         }
       })
+    },
+    gotoCommits (branchId) {
+      this.$router.push({ path: '/commits?branchId=' + branchId })
     }
   }
 }
