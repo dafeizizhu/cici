@@ -65,6 +65,9 @@ class ClientApi {
   deleteDeploy (deployId, session) {
     return HttpFetch.httpPost('/api/deleteDeploy', null, { deployId })
   }
+  findCommits (branchId, session) {
+    return HttpFetch.httpGet('/api/findCommits', { branchId })
+  }
 }
 
 class HttpFetch {

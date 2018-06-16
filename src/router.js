@@ -36,6 +36,9 @@ export function createRouter () {
     }, {
       path: '/deploy',
       component: () => import(/* webpackChunkName: "deploy" */ './components/Deploy.vue')
+    }, {
+      path: '/commits',
+      component: () => import(/* webpackChunkName: "commit" */ './components/Commits.vue')
     }]
   })
 }
