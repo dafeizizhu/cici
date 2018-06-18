@@ -68,6 +68,9 @@ class ClientApi {
   findCommits (branchId, session) {
     return HttpFetch.httpGet('/api/findCommits', { branchId })
   }
+  fetchCommits (branchId, session) {
+    return HttpFetch.httpPost('/api/fetchCommits', null, { branchId })
+  }
 }
 
 class HttpFetch {

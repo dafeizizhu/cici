@@ -10,6 +10,9 @@ export default {
     findCommits: ({ state, commit }, { session, branchId }) => {
       return Api.getSharedInstance().findCommits(branchId, session)
         .then(({ branchInfo, commitInfoList }) => commit('findCommits', { session, branchInfo, commitInfoList }))
+    },
+    fetchCommits: ({ state, commit }, { session, branchId }) => {
+      return Api.getSharedInstance().fetchCommits(branchId, session)
     }
   },
   mutations: {

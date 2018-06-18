@@ -1,7 +1,7 @@
 <template>
   <section>
     <el-row>
-      <h1>分支：{{ branchInfo.name }}  <el-button>更新</el-button></h1>
+      <h1>分支：{{ branchInfo.name }}  <el-button @click='fetchCommits(branchInfo.id)'>更新</el-button></h1>
     </el-row>
     <el-row>
       <el-table :data='commitInfoList' style='width: 100%'>
@@ -30,7 +30,22 @@ export default {
     session: state => state.session,
     branchInfo: state => state.branchInfo,
     commitInfoList: state => state.commitInfoList
-  })
+  }),
+  methods: {
+    fetchCommits (branchId) {
+      let loadingInstance = this.$loading()
+      this.$store.dispatch(`${NS}/fetchCommits`, {
+        session: this.session,
+        branchId
+      }).then(_ => {
+        loadingInstance.close()
+        this.$alert('更新完成').then(_ => global.location.reload())
+      }).catch(error => {
+        loadingInstance.close()
+        this.$alert(`更新失败：${error.message}`)
+      })
+    }
+  }
 }
 
 </script>
